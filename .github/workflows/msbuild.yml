@@ -1,0 +1,29 @@
+name: MSBuild
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1.1
+
+    - run: nuget restore MahjongAI.sln
+
+    - name: MSBuild binary file
+      run: |
+        msbuild MahjongAI.sln /t:Build /p:Configuration=Release /p:OutputPath=build
+        
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: dist
+        path: ./build/*

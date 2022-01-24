@@ -1,4 +1,5 @@
 # Project ignored
+.DS_Store
 packages
 reverse
 MahjongAI/App.config
